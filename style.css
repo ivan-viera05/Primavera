@@ -1,0 +1,1234 @@
+/* ==========================================================
+   ESTILOS GENERALES Y VARIABLES DE COLOR
+   ========================================================== */
+:root {
+  --primary-yellow: #FFC837;
+  --warm-gold: #E89E14;
+  --bright-gold: #FFE066;
+  --deep-gold: #B87A04;
+  --sun-center: #432818;
+  --leaf-green: #588157;
+  --stem-green: #3A5A40;
+  --bg-gradient-start: #FFF9E6;
+  --bg-gradient-end: #FFEBB7;
+  --parchment-bg: #FFFDF8;
+  --parchment-border: #F3E3B6;
+  --text-dark: #2B2118;
+  --text-muted: #6E5B48;
+  --accent-red: #D94A4A;
+  --shadow-soft: 0 10px 30px rgba(184, 122, 4, 0.12);
+  --shadow-deep: 0 16px 40px rgba(67, 40, 24, 0.18);
+  --font-title: 'Playfair Display', Georgia, serif;
+  --font-script: 'Caveat', 'Great Vibes', cursive;
+  --font-body: 'Montserrat', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  font-family: var(--font-body);
+  color: var(--text-dark);
+  background: linear-gradient(135deg, #FFF9EB 0%, #FFF2CC 45%, #FFE7A3 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+/* Canvas de pétalos flotantes */
+#petal-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99;
+}
+
+/* ==========================================================
+   BOTÓN DE MÚSICA FLOTANTE
+   ========================================================== */
+/* ==========================================================
+   REPRODUCTOR DE MÚSICA FLOTANTE - RUNNING HOME TO YOU
+   ========================================================== */
+.audio-control {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.music-player-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid var(--primary-yellow);
+  padding: 6px 14px 6px 8px;
+  border-radius: 50px;
+  box-shadow: 0 6px 20px rgba(232, 158, 20, 0.22);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.music-player-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(232, 158, 20, 0.35);
+  background: #FFFFFF;
+}
+
+/* Botón y disco de vinilo */
+.music-disc-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vinyl-disc {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  background: radial-gradient(circle, #2B2118 40%, #15100B 90%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.4s ease;
+}
+
+.vinyl-grooves {
+  position: absolute;
+  width: 82%;
+  height: 82%;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+.vinyl-center {
+  font-size: 1rem;
+  line-height: 1;
+  z-index: 2;
+}
+
+/* Girar vinilo al reproducir */
+.music-player-card.is-playing .vinyl-disc {
+  animation: spinVinyl 3.5s linear infinite;
+}
+
+@keyframes spinVinyl {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Información de la canción */
+.music-track-details {
+  display: flex;
+  flex-direction: column;
+  max-width: 145px;
+}
+
+.music-marquee {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.music-track-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: inline-block;
+}
+
+.music-track-artist {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #A06400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ecualizador animado */
+.music-equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 16px;
+  padding-left: 2px;
+}
+
+.eq-bar {
+  width: 3px;
+  height: 4px;
+  background: var(--warm-gold);
+  border-radius: 2px;
+  transition: height 0.2s ease;
+}
+
+.music-player-card.is-playing .eq-bar.bar-1 {
+  animation: eqBounce 0.8s infinite ease-in-out alternate;
+}
+.music-player-card.is-playing .eq-bar.bar-2 {
+  animation: eqBounce 1.1s infinite ease-in-out alternate 0.2s;
+}
+.music-player-card.is-playing .eq-bar.bar-3 {
+  animation: eqBounce 0.7s infinite ease-in-out alternate 0.4s;
+}
+.music-player-card.is-playing .eq-bar.bar-4 {
+  animation: eqBounce 0.9s infinite ease-in-out alternate 0.1s;
+}
+
+@keyframes eqBounce {
+  0% { height: 4px; }
+  100% { height: 16px; }
+}
+
+/* Contenedor mini de YouTube (oculto visualmente pero activo en audio) */
+.mini-player-container {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  width: 180px;
+  height: 100px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--primary-yellow);
+  background: #000000;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: all 0.3s ease;
+}
+
+.mini-player-container.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.mini-player-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ==========================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================== */
+.main-container {
+  position: relative;
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* ==========================================================
+   SECCIÓN 1: INTRODUCCIÓN Y SOBRE CERRADO
+   ========================================================== */
+.envelope-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: fadeIn 1s ease-out;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.envelope-section.hide-away {
+  opacity: 0;
+  transform: scale(0.92) translateY(-20px);
+  pointer-events: none;
+}
+
+.intro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(232, 158, 20, 0.3);
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 0.82rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--warm-gold);
+  margin-bottom: 16px;
+  box-shadow: 0 2px 10px rgba(232, 158, 20, 0.12);
+}
+
+.intro-title {
+  font-family: var(--font-title);
+  font-size: 2.3rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+
+.intro-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 480px;
+  margin-bottom: 35px;
+  line-height: 1.5;
+}
+
+/* Sobre 3D */
+.envelope-wrapper {
+  position: relative;
+  width: 320px;
+  height: 220px;
+  margin: 15px auto 30px;
+  cursor: pointer;
+  perspective: 1000px;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.envelope-wrapper:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+.envelope {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #FFF0BA;
+  border-radius: 12px;
+  box-shadow: var(--shadow-deep);
+  border: 2px solid #F3DA96;
+}
+
+/* Parte de atrás del sobre */
+.envelope-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #FBEBB5 0%, #F5DE9B 100%);
+  border-radius: 10px;
+  z-index: 1;
+}
+
+/* Mini carta asomándose */
+.letter-preview {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 86%;
+  height: 80%;
+  background: #FFFDF9;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px dashed #E5CD94;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: transform 0.5s ease;
+}
+
+.preview-heart {
+  font-size: 2rem;
+  filter: drop-shadow(0 2px 4px rgba(232, 158, 20, 0.4));
+  animation: pulseBeat 1.8s infinite ease-in-out;
+}
+
+/* Frontal del sobre (pliegues laterales e inferior) */
+.envelope-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  z-index: 3;
+  pointer-events: none;
+  background: 
+    linear-gradient(35deg, #F3D991 48%, transparent 50%),
+    linear-gradient(-35deg, #F0D489 48%, transparent 50%),
+    linear-gradient(to top, #EBCF80 40%, transparent 70%);
+}
+
+/* Solapa triangular superior */
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-top: 125px solid #F8DF9B;
+  transform-origin: top center;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), border-top-color 0.4s;
+  z-index: 4;
+  filter: drop-shadow(0 3px 5px rgba(110, 91, 72, 0.15));
+}
+
+/* Estado de sobre abierto */
+.envelope.is-open .envelope-flap {
+  transform: rotateX(180deg);
+  border-top-color: #E6CC88;
+  z-index: 1;
+}
+
+.envelope.is-open .letter-preview {
+  transform: translate(-50%, -70px);
+}
+
+/* Sello de lacre con Girasol */
+.wax-seal {
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 58px;
+  height: 58px;
+  background: radial-gradient(circle at 35% 35%, #FFA500, #E67E00 70%, #994700 100%);
+  border-radius: 50%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(153, 71, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.wax-seal:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.envelope.is-open .wax-seal {
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+}
+
+.seal-flower {
+  font-size: 1.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+/* Etiqueta Para Ari */
+.envelope-tag {
+  position: absolute;
+  bottom: -16px;
+  right: -10px;
+  background: #FFFFFF;
+  padding: 8px 18px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  border: 1px solid #F3DA96;
+  font-family: var(--font-script);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  transform: rotate(-4deg);
+  z-index: 6;
+  pointer-events: none;
+}
+
+.tag-to {
+  font-size: 1.1rem;
+  color: var(--warm-gold);
+  margin-right: 4px;
+}
+
+/* Botón de Abrir */
+.open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #FFC837 0%, #FF9F00 100%);
+  color: #382503;
+  border: none;
+  padding: 16px 36px;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255, 160, 0, 0.35);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.open-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(255, 160, 0, 0.45);
+}
+
+.open-btn:active {
+  transform: translateY(1px);
+}
+
+.btn-icon {
+  font-size: 1.2rem;
+}
+
+.touch-hint {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  opacity: 0.85;
+}
+
+/* ==========================================================
+   SECCIÓN 2: CARTA DE AMOR Y RAMO VIRTUAL
+   ========================================================== */
+.letter-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: slideUpFade 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.letter-section.hidden {
+  display: none;
+}
+
+/* Pergamino */
+.parchment-letter {
+  position: relative;
+  width: 100%;
+  max-width: 660px;
+  background: var(--parchment-bg);
+  border-radius: 18px;
+  padding: 55px 45px;
+  box-shadow: 0 20px 60px rgba(184, 122, 4, 0.15), 0 2px 10px rgba(0,0,0,0.03);
+  border: 2px solid var(--parchment-border);
+  margin-bottom: 50px;
+  overflow: hidden;
+}
+
+/* Textura sutil y esquinas florales */
+.parchment-decorations span {
+  position: absolute;
+  font-size: 1.4rem;
+  opacity: 0.6;
+  user-select: none;
+}
+
+.corner-flower.top-left { top: 18px; left: 18px; }
+.corner-flower.top-right { top: 18px; right: 18px; }
+.corner-flower.bottom-left { bottom: 18px; left: 18px; }
+.corner-flower.bottom-right { bottom: 18px; right: 18px; }
+
+.letter-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.spring-ribbon {
+  display: inline-block;
+  background: #FFF2C7;
+  color: #A06400;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  padding: 6px 18px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  border: 1px solid #FFE082;
+}
+
+.letter-recipient {
+  font-family: var(--font-title);
+  font-size: 2.2rem;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.golden-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 14px auto 0;
+  width: 75%;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #E5C365, transparent);
+}
+
+.divider-gem {
+  font-size: 1.1rem;
+}
+
+/* Cuerpo de la Carta */
+.letter-body {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: #3C3026;
+}
+
+.letter-paragraph {
+  margin-bottom: 22px;
+  text-align: justify;
+}
+
+.letter-paragraph strong {
+  color: #A06400;
+  font-weight: 600;
+}
+
+.quote-box {
+  margin: 30px 0 20px;
+  padding: 20px 24px;
+  background: #FFF9E6;
+  border-left: 4px solid var(--warm-gold);
+  border-radius: 0 12px 12px 0;
+  text-align: center;
+}
+
+.poetic-quote {
+  font-family: var(--font-script);
+  font-size: 1.7rem;
+  color: #6E4907;
+  line-height: 1.4;
+}
+
+/* Tarjeta especial para Running Home to You */
+.song-dedication-card {
+  margin: 24px 0 28px;
+  padding: 22px 24px;
+  background: linear-gradient(135deg, #FFF8E1 0%, #FFF2B2 100%);
+  border: 1.5px solid #FFD54F;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(232, 158, 20, 0.12);
+  position: relative;
+  text-align: center;
+}
+
+.song-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.song-note {
+  font-size: 1.2rem;
+  animation: pulseBeat 1.5s infinite ease-in-out;
+}
+
+.song-title-label {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-weight: 700;
+  color: #8C5300;
+}
+
+.song-lyrics {
+  font-family: var(--font-title);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #382503;
+  margin-bottom: 10px;
+}
+
+.song-artist-tag {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #A06400;
+  letter-spacing: 0.5px;
+}
+
+.love-ending {
+  font-weight: 500;
+  color: #2D2016;
+}
+
+/* Pie de la Carta */
+.letter-footer {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  border-top: 1px dashed #EAD7A6;
+  padding-top: 25px;
+}
+
+.letter-closing {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.letter-signature {
+  font-family: var(--font-script);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--warm-gold);
+  margin-top: 4px;
+}
+
+.stamp-box {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1.5px solid #D8BC78;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  color: #92753C;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transform: rotate(3deg);
+}
+
+/* ==========================================================
+   RAMO DE FLORES VIRTUAL (ARTE INTERACTIVO)
+   ========================================================== */
+.bouquet-container {
+  width: 100%;
+  max-width: 660px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px 30px;
+  margin-bottom: 45px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(255, 214, 102, 0.4);
+  text-align: center;
+}
+
+.bouquet-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #9B6204;
+  background: #FFF1BD;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.bouquet-title {
+  font-family: var(--font-title);
+  font-size: 1.65rem;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.bouquet-subtitle {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-bottom: 30px;
+}
+
+/* Dibujo y animación del ramo */
+.bouquet-display {
+  position: relative;
+  height: 280px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.flower-bunch {
+  position: relative;
+  width: 260px;
+  height: 270px;
+}
+
+/* Girasoles CSS */
+.sunflower-art {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  transition: transform 0.3s ease;
+}
+
+.sunflower-art:hover {
+  transform: scale(1.1) rotate(5deg) !important;
+}
+
+/* Corona de pétalos dorados con gradiente cónico */
+.flower-petals-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    #FFD54F 0deg 15deg,
+    #FFA000 15deg 30deg
+  );
+  box-shadow: 0 4px 15px rgba(255, 160, 0, 0.35);
+  animation: gentlePulse 3s infinite ease-in-out alternate;
+}
+
+/* Centro con textura de semillas */
+.flower-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #5D3A1A 30%, #3B210B 90%);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
+  border: 2px dashed rgba(255, 200, 55, 0.4);
+}
+
+/* Tallo */
+.stem {
+  position: absolute;
+  top: 85px;
+  left: 48px;
+  width: 6px;
+  height: 160px;
+  background: linear-gradient(to right, #4F7942, #39572F);
+  border-radius: 4px;
+  z-index: -1;
+}
+
+.stem.mini {
+  height: 90px;
+  top: 50px;
+  left: 27px;
+}
+
+/* Hojas verdes */
+.leaf {
+  position: absolute;
+  width: 26px;
+  height: 14px;
+  background: #5A874B;
+  border-radius: 14px 0 14px 0;
+}
+
+.leaf.left {
+  top: 40px;
+  left: -20px;
+  transform: rotate(-30deg);
+}
+
+.leaf.right {
+  top: 60px;
+  right: -20px;
+  transform: rotate(30deg) scaleX(-1);
+}
+
+/* Distribución del ramo */
+.flower-1 {
+  left: 10px;
+  top: 40px;
+  transform: rotate(-18deg) scale(0.85);
+  animation: swayLeft 4s infinite ease-in-out;
+}
+
+.flower-2.main-sunflower {
+  left: 80px;
+  top: 0px;
+  transform: scale(1.08);
+  z-index: 2;
+  animation: swayCenter 5s infinite ease-in-out;
+}
+
+.flower-3 {
+  right: 10px;
+  top: 35px;
+  transform: rotate(18deg) scale(0.88);
+  animation: swayRight 4.5s infinite ease-in-out;
+}
+
+/* Margaritas pequeñas */
+.daisy-art {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  z-index: 3;
+}
+
+.daisy-1 {
+  bottom: 60px;
+  left: 30px;
+  transform: rotate(-10deg);
+}
+
+.daisy-2 {
+  bottom: 50px;
+  right: 35px;
+  transform: rotate(15deg);
+}
+
+.daisy-petals {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    #FFF8E1 0deg 20deg,
+    #FFE082 20deg 40deg
+  );
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.daisy-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #FFB300;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.ribbon-bow {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  font-size: 2.2rem;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+  animation: bounceSoft 2s infinite ease-in-out;
+}
+
+/* Botones de acción mágica */
+.magic-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.magic-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFC107;
+  color: #3E2723;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.35);
+  transition: all 0.25s ease;
+}
+
+.magic-btn:hover {
+  transform: translateY(-2px);
+  background: #FFB300;
+  box-shadow: 0 6px 20px rgba(255, 179, 0, 0.45);
+}
+
+.magic-btn.secondary {
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--text-dark);
+  border: 1px solid #E5C578;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+}
+
+.magic-btn.secondary:hover {
+  background: #FFFDF5;
+  border-color: var(--warm-gold);
+}
+
+/* ==========================================================
+   SECCIÓN RAZONES (PÉTALOS INTERACTIVOS)
+   ========================================================== */
+.reasons-section {
+  width: 100%;
+  max-width: 660px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.reasons-title {
+  font-family: var(--font-title);
+  font-size: 1.55rem;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.reasons-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 25px;
+}
+
+.reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.reason-card {
+  position: relative;
+  background: #FFFFFF;
+  border: 1.5px solid #F6DF9F;
+  border-radius: 14px;
+  padding: 24px 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(232, 158, 20, 0.08);
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 140px;
+  justify-content: center;
+}
+
+.reason-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--warm-gold);
+  box-shadow: 0 8px 24px rgba(232, 158, 20, 0.2);
+}
+
+.card-icon {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  transition: transform 0.3s ease;
+}
+
+.card-number {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--warm-gold);
+}
+
+.card-hidden-msg {
+  display: none;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #3C2E20;
+  margin-top: 10px;
+  animation: fadeIn 0.4s ease;
+}
+
+.tap-label {
+  font-size: 0.75rem;
+  color: #9C826B;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.reason-card.revealed {
+  background: #FFFDF0;
+  border-color: #FFC107;
+}
+
+.reason-card.revealed .card-hidden-msg {
+  display: block;
+}
+
+.reason-card.revealed .card-number,
+.reason-card.revealed .tap-label {
+  display: none;
+}
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+.page-footer {
+  text-align: center;
+  padding-top: 25px;
+  border-top: 1px solid rgba(232, 158, 20, 0.2);
+  width: 100%;
+  max-width: 660px;
+}
+
+.footer-quote {
+  font-family: var(--font-script);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--warm-gold);
+  margin-bottom: 6px;
+}
+
+.footer-small {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================
+   ANIMACIONES
+   ========================================================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes gentlePulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.03); }
+}
+
+@keyframes swayLeft {
+  0%, 100% { transform: rotate(-18deg) scale(0.85); }
+  50% { transform: rotate(-12deg) scale(0.85); }
+}
+
+@keyframes swayRight {
+  0%, 100% { transform: rotate(18deg) scale(0.88); }
+  50% { transform: rotate(14deg) scale(0.88); }
+}
+
+@keyframes swayCenter {
+  0%, 100% { transform: scale(1.08) rotate(0deg); }
+  50% { transform: scale(1.08) rotate(3deg); }
+}
+
+@keyframes bounceSoft {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-5px); }
+}
+
+/* Efecto al hacer clic en pantalla (Flor flotante efímera) */
+.click-flower-burst {
+  position: fixed;
+  pointer-events: none;
+  font-size: 2rem;
+  z-index: 1000;
+  animation: burstFloat 1.2s cubic-bezier(0.12, 0.8, 0.33, 1) forwards;
+}
+
+@keyframes burstFloat {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  }
+  70% {
+    opacity: 0.9;
+    transform: translate(-50%, -100px) scale(1.4) rotate(45deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -140px) scale(1) rotate(90deg);
+  }
+}
+
+/* ==========================================================
+   RESPONSIVE DESIGN (MÓVILES)
+   ========================================================== */
+@media (max-width: 600px) {
+  .main-container {
+    padding: 30px 16px 60px;
+  }
+
+  .intro-title {
+    font-size: 1.85rem;
+  }
+
+  .intro-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+  }
+
+  .envelope-wrapper {
+    width: 280px;
+    height: 190px;
+  }
+
+  .envelope-flap {
+    border-left-width: 140px;
+    border-right-width: 140px;
+    border-top-width: 110px;
+  }
+
+  .envelope-tag {
+    font-size: 1.25rem;
+    padding: 6px 14px;
+    right: 5px;
+    bottom: -12px;
+  }
+
+  .parchment-letter {
+    padding: 38px 22px;
+  }
+
+  .letter-recipient {
+    font-size: 1.8rem;
+  }
+
+  .letter-body {
+    font-size: 0.98rem;
+    line-height: 1.75;
+  }
+
+  .poetic-quote {
+    font-size: 1.4rem;
+  }
+
+  .bouquet-container {
+    padding: 30px 18px;
+  }
+
+  .bouquet-title {
+    font-size: 1.4rem;
+  }
+
+  .magic-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

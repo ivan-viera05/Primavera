@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Para Ari 💛 Feliz Día de la Primavera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,400;1,600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Canvas para lluvia de pétalos y destellos de polen -->
+  <canvas id="petal-canvas"></canvas>
+
+  <!-- Reproductor de música "Running Home to You - Barry Allen" -->
+  <aside class="audio-control" id="audio-control" aria-label="Reproductor de música">
+    <div class="music-player-card">
+      <button id="music-btn" class="music-disc-btn" aria-label="Reproducir Running Home to You">
+        <div class="vinyl-disc" id="vinyl-disc">
+          <div class="vinyl-grooves"></div>
+          <span class="vinyl-center">🌻</span>
+        </div>
+      </button>
+
+      <div class="music-track-details">
+        <div class="music-marquee">
+          <span class="music-track-title">Running Home to You</span>
+        </div>
+        <span class="music-track-artist">Barry Allen ⚡ (Grant Gustin)</span>
+      </div>
+
+      <div class="music-equalizer" id="equalizer" title="Sonando">
+        <span class="eq-bar bar-1"></span>
+        <span class="eq-bar bar-2"></span>
+        <span class="eq-bar bar-3"></span>
+        <span class="eq-bar bar-4"></span>
+      </div>
+    </div>
+
+    <!-- Mini reproductor de video / audio embebido -->
+    <div class="mini-player-container" id="mini-player-container">
+      <div id="yt-player-target"></div>
+    </div>
+  </aside>
+
+  <!-- Audio local opcional si se coloca running-home-to-you.mp3 -->
+  <audio id="local-audio" src="Runnin-HometoYou.mp4" preload="auto" loop></audio>
+
+
+  <!-- Contenedor principal -->
+  <main class="main-container">
+
+    <!-- SECCIÓN 1: SOBRE CERRADO -->
+    <section class="envelope-section" id="envelope-section">
+      <div class="intro-badge">
+        <span class="sparkle">✨</span>
+        <span class="spring-tag">21 de Septiembre • Primavera</span>
+        <span class="sparkle">✨</span>
+      </div>
+
+      <h1 class="intro-title">Un detalle especial para vos</h1>
+      <p class="intro-subtitle">Dicen que las flores amarillas prometen amor para siempre...</p>
+
+      <!-- Sobre Interactivo 3D -->
+      <div class="envelope-wrapper" id="envelope-wrapper">
+        <div class="envelope" id="envelope">
+          <div class="envelope-front"></div>
+          <div class="envelope-back"></div>
+          <div class="envelope-flap" id="envelope-flap"></div>
+
+          <!-- Mini preview de la carta asomándose -->
+          <div class="letter-preview">
+            <span class="preview-heart">💛</span>
+          </div>
+
+          <!-- Sello de cera con girasol -->
+          <div class="wax-seal" id="wax-seal">
+            <div class="seal-inner">
+              <span class="seal-flower">🌻</span>
+            </div>
+            <div class="seal-ring"></div>
+          </div>
+        </div>
+
+        <div class="envelope-tag">
+          <span class="tag-to">Para:</span>
+          <span class="tag-name">Ari 💛</span>
+        </div>
+      </div>
+
+      <button class="open-btn" id="open-btn">
+        <span>Abrir mi carta</span>
+        <span class="btn-icon">💌</span>
+      </button>
+
+      <p class="touch-hint">🌻 Tocá el sobre o el botón para abrir</p>
+    </section>
+
+    <!-- SECCIÓN 2: CARTA ABIERTA Y CONTENIDO ROMÁNTICO -->
+    <section class="letter-section hidden" id="letter-section">
+
+      <!-- Carta Pergamino -->
+      <article class="parchment-letter">
+        <div class="parchment-decorations">
+          <span class="corner-flower top-left">🌼</span>
+          <span class="corner-flower top-right">🌼</span>
+          <span class="corner-flower bottom-left">🌼</span>
+          <span class="corner-flower bottom-right">🌼</span>
+        </div>
+
+        <header class="letter-header">
+          <div class="spring-ribbon">🌻 ¡Feliz Primavera, mi amor! 🌻</div>
+          <h2 class="letter-recipient">Querida Ari,</h2>
+          <div class="golden-divider">
+            <span class="divider-line"></span>
+            <span class="divider-gem">💛</span>
+            <span class="divider-line"></span>
+          </div>
+        </header>
+
+        <div class="letter-body">
+          <p class="letter-paragraph">
+            Hoy comienza la primavera, y con ella llega esa hermosa tradición de regalar
+            <strong>flores amarillas</strong> a quien ilumina todos tus días.
+            No quería darte flores que duren solo una semana; quería regalarte un jardín
+            que florezca cada vez que abras este recuerdo.
+          </p>
+
+          <p class="letter-paragraph">
+            El color amarillo significa luz, alegría, tibieza y la promesa de permanecer juntos.
+            Y eso es exactamente lo que sos para mí: la primavera constante en mis días,
+            la sonrisa que me reinicia y el abrazo donde siempre quiero quedarme.
+          </p>
+
+          <div class="quote-box">
+            <p class="poetic-quote">
+              "En un mundo lleno de inviernos, vos sos mi primavera favorita."
+            </p>
+          </div>
+
+          <div class="song-dedication-card">
+            <div class="song-header">
+              <span class="song-note">🎶</span>
+              <span class="song-title-label">Nuestra canción especial:</span>
+            </div>
+            <p class="song-lyrics">
+              “Can’t say how the days will unfold,<br>
+              can’t change what the future may hold...<br>
+              but I want you in it, every hour, every minute.<br>
+              And all my life, I promise to keep running home to you.”
+            </p>
+            <p class="song-artist-tag">— Barry Allen (Running Home to You) ⚡💛</p>
+          </div>
+
+          <p class="letter-paragraph">
+            Gracias por llenar mi vida de colores vivos, por tu risa y por acompañarme en cada paso.
+            Que este nuevo ciclo te llene de sueños cumplidos, proyectos hermosos y momentos felices a mi lado.
+          </p>
+
+          <p class="letter-paragraph love-ending">
+            Prometo regalarte flores amarillas, complicidad y amor sincero siempre.
+          </p>
+        </div>
+
+        <footer class="letter-footer">
+          <p class="letter-closing">Con todo mi amor,</p>
+          <p class="letter-signature">Por siempre tuyo 💛</p>
+          <div class="stamp-box">
+            <span class="stamp-date">21 • 09 • 2026</span>
+            <span class="stamp-text">Jardín Eterno</span>
+          </div>
+        </footer>
+      </article>
+
+      <!-- SECCIÓN DEL RAMO DE FLORES AMARILLAS VIRTUAL -->
+      <div class="bouquet-container">
+        <div class="bouquet-header">
+          <span class="bouquet-badge">Tu Ramo Especial</span>
+          <h3 class="bouquet-title">Flores amarillas que nunca se marchitan 🌻</h3>
+          <p class="bouquet-subtitle">Tocá cualquier flor o cualquier parte de la pantalla para hacer nacer más flores
+          </p>
+        </div>
+
+        <div class="bouquet-display" id="bouquet-display">
+          <!-- Flores animadas e interactivas -->
+          <div class="flower-bunch">
+            <div class="sunflower-art flower-1" title="Girasol brillante">
+              <div class="flower-petals-ring"></div>
+              <div class="flower-center"></div>
+              <div class="stem"></div>
+              <div class="leaf left"></div>
+              <div class="leaf right"></div>
+            </div>
+
+            <div class="sunflower-art flower-2 main-sunflower" title="Girasol principal">
+              <div class="flower-petals-ring"></div>
+              <div class="flower-center"></div>
+              <div class="stem"></div>
+              <div class="leaf left"></div>
+              <div class="leaf right"></div>
+            </div>
+
+            <div class="sunflower-art flower-3" title="Girasol dulce">
+              <div class="flower-petals-ring"></div>
+              <div class="flower-center"></div>
+              <div class="stem"></div>
+              <div class="leaf left"></div>
+              <div class="leaf right"></div>
+            </div>
+
+            <div class="daisy-art daisy-1">
+              <div class="daisy-petals"></div>
+              <div class="daisy-center"></div>
+              <div class="stem mini"></div>
+            </div>
+
+            <div class="daisy-art daisy-2">
+              <div class="daisy-petals"></div>
+              <div class="daisy-center"></div>
+              <div class="stem mini"></div>
+            </div>
+
+            <div class="ribbon-bow">
+              <span class="bow-center">🎗️</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de Acción Mágica -->
+        <div class="magic-actions">
+          <button class="magic-btn" id="rain-btn">
+            <span class="magic-icon">✨</span>
+            <span>Lluvia de Flores y Destellos</span>
+          </button>
+
+          <button class="magic-btn secondary" id="reset-envelope-btn">
+            <span class="magic-icon">💌</span>
+            <span>Volver a guardar en el sobre</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SECCIÓN INTERACTIVA: RAZONES PARA DARTE FLORES AMARILLAS -->
+      <div class="reasons-section">
+        <h3 class="reasons-title">Toca un pétalo para descubrir un mensaje 🌼</h3>
+        <p class="reasons-subtitle">Pequeñas razones por las que hacés florecer mi vida:</p>
+
+        <div class="reasons-grid">
+          <div class="reason-card" data-reason="1">
+            <div class="card-icon">☀️</div>
+            <div class="card-number">Pétalo 1</div>
+            <div class="card-hidden-msg">Por tu risa hermosa, que tiene la magia de iluminar hasta el día más gris.
+            </div>
+            <span class="tap-label">Descubrir</span>
+          </div>
+
+          <div class="reason-card" data-reason="2">
+            <div class="card-icon">🌻</div>
+            <div class="card-number">Pétalo 2</div>
+            <div class="card-hidden-msg">Porque estar con vos se siente como un día soleado de primavera en el corazón.
+            </div>
+            <span class="tap-label">Descubrir</span>
+          </div>
+
+          <div class="reason-card" data-reason="3">
+            <div class="card-icon">✨</div>
+            <div class="card-number">Pétalo 3</div>
+            <div class="card-hidden-msg">Por tu dulzura, tus abrazos que me reinician y todo lo que somos juntos.</div>
+            <span class="tap-label">Descubrir</span>
+          </div>
+
+          <div class="reason-card" data-reason="4">
+            <div class="card-icon">💛</div>
+            <div class="card-number">Pétalo 4</div>
+            <div class="card-hidden-msg">Porque te elijo hoy, mañana y en cada primavera que nos toque vivir.</div>
+            <span class="tap-label">Descubrir</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER DEDICATORIA -->
+      <footer class="page-footer">
+        <p class="footer-quote">Creado con todo el amor del mundo para Ari 🌻</p>
+        <p class="footer-small">¡Feliz 21 de Septiembre! Que las flores amarillas te acompañen siempre 💛</p>
+      </footer>
+
+    </section>
+
+  </main>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
